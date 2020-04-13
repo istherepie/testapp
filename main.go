@@ -8,6 +8,8 @@ import (
 	"os"
 )
 
+var appName *string
+
 func logger(req *http.Request) {
 	var uri string = req.RequestURI
 	var method string = req.Method
@@ -15,10 +17,8 @@ func logger(req *http.Request) {
 }
 
 func rootHandler(w http.ResponseWriter, req *http.Request) {
-
 	logger(req)
-	var message string = "This is a response from the testapp"
-	fmt.Fprintf(w, "%s\n", message)
+	fmt.Fprintf(w, "Running app: %s\n", *appName)
 }
 
 func headers(w http.ResponseWriter, req *http.Request) {
@@ -42,6 +42,7 @@ func main() {
 
 	// Flags
 	var serverPort = flag.String("port", "8080", "Specify which port the server runs on")
+	appName = flag.String("name", "testapp", "Specify which port the server runs on")
 	flag.Parse()
 
 	// Info
